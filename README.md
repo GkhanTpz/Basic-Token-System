@@ -40,26 +40,90 @@ Result:
 ### Python 🐍
 
 ```python
-from token_util import generate_token
+"""
+Provides the `generate_token(user_id)` function to create a secure, time-based, random token.
+The generated token is Base64 encoded for safe transmission and storage.
+"""
+from token_util import generate_token # Function to generate a secure token.
 
-token = generate_token("user123")
-print(token)
+# Example usage of the function
+if __name__ == "__main__":
+    user_id = input("Please enter a user ID for token: ")
+    token = generate_token(user_id)
+    print("Token:", token)
 ```
 
 ### C ⚙️
 
 ```c
-#include "token_util.h"
+#include <stdio.h>
+#include <stdlib.h>  // For malloc and free
+#include <string.h>  // For strcspn function
+#include "token_util.h" // Needed to access the generate_token() function
+
+#define USER_LENGTH 50
 
 int main() {
     char token[256];
-    generate_token("user123", token);
-    printf("%s\n", token);
+    
+    // Proper memory allocation for user_id
+    char* user_id = (char*)malloc(USER_LENGTH * sizeof(char));
+
+    // Check if memory allocation was successful
+    if (user_id == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return 1;
+    }
+
+    // Prompt the user and read the input using fgets
+    printf("%s","Enter user ID for token: ");
+    fgets(user_id, USER_LENGTH, stdin);  // Read up to USER_LENGTH-1 characters
+
+    // Remove the newline character if present (fgets includes it)
+    user_id[strcspn(user_id, "\n")] = '\0';
+
+    // Generate token
+    generate_token(user_id, token);
+
+    // Print the generated token
+    printf("Token: %s\n", token);
+
+    // Free allocated memory
+    free(user_id);
+
     return 0;
 }
 ```
 
----
+## 📈 Build & Run Instructions
+
+### 🔹 Python (🐍)
+
+> Minimum Requirement: Python 3.7+  
+> Best Practice: Use a Virtual Environment
+
+```bash
+# 1. (Optional but recommended) Create a virtual environment
+python3 -m venv venv
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+
+# 2. Install required packages (no external packages needed for now)
+
+# 3. Run your script
+python your_script.py
+```
+
+### 🔹 C (⚙️)
+
+> Minimum Requirement: GCC compiler (or any C99 compatible compiler)
+
+```bash
+# 1. Compile the program
+gcc your_program.c -o your_program
+
+# 2. Run the executable
+./your_program
+```
 
 ## 📦 Example Output
 
@@ -83,11 +147,3 @@ dXNlcjEyMzoxNzEzOTAxMjM0OmFlYmNkZWYxMjM0NTY3OA==
 ## 📝 **License**
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
-✨ *Simple, secure, and ready to use.* ✨
-
----
-
-**Bence:**  
-Bu hali tam "basic", "hızlı bakınca ne yaptığı anlaşılıyor" kafasında oldu. 🔥  
-İstersen buna bir tane daha "nasıl test ederim?" gibi küçük bir bölüm de ekleyebilirim. İster misin? 📈
