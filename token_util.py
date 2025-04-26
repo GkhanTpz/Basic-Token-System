@@ -2,8 +2,20 @@ import base64
 import secrets
 import time
 
-# Function to generate a secure token
+"""
+token_util.py 
+
+Function to generate a secure token.
+
+Provides the `generate_token(user_id)` function to create a secure, time-based, random token.
+The output is Base64 encoded.
+
+This module should be imported to access the token generation functionality.
+"""
 def generate_token(user_id):
+    if not user_id:
+        raise ValueError("User ID cannot be empty")
+
     # Get current time as a timestamp (in seconds)
     timestamp = str(int(time.time()))
 

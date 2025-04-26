@@ -56,6 +56,12 @@ void generate_random_string(char *output, int length) {
 }
 
 void generate_token(const char* user_id, char* final_token) {
+    // Check if user_id is empty or NULL, and terminate the program with an error message
+    if (user_id == NULL || strlen(user_id) == 0) {
+        fprintf(stderr, "Error: User ID cannot be empty\n");
+        exit(1);  // Terminate the program
+    }
+
     char raw[128];
     char random_part[17]; // 16 chars + null
     generate_random_string(random_part, 16);
